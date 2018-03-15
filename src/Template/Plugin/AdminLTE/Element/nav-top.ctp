@@ -21,7 +21,7 @@ if (file_exists($file)) {
       <!-- User Account: style can be found in dropdown.less -->
       <li class="dropdown user user-menu">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-          <?php echo $this->Html->image('user2-160x160.jpg', array('class' => 'user-image', 'alt' => 'User Image')); ?>
+          <?php echo $this->Html->image('Users/photo/'.$user->id.'/'.$user->photo, array('class' => 'user-image', 'alt' => 'User Image')); ?>
           <span class="hidden-xs"><?php   echo $user['email'] ?></span>
         </a>
         <ul class="dropdown-menu">

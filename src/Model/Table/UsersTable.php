@@ -41,7 +41,17 @@ class UsersTable extends Table
         $this->setDisplayField('fullName');
         $this->setPrimaryKey('id');
         $this->addBehavior('Josegonzalez/Upload.Upload', [
-            'photo',
+           'photo' => [
+         
+        'path' => 'webroot{DS}img{DS}{model}{DS}{field}{DS}{primaryKey}',
+        'pathProcessor' => 'Josegonzalez\Upload\File\Path\DefaultProcessor',
+        // Allows you to create new files from the original source,
+        // or possibly even modify/remove the original source file
+        // from the upload process
+        'transformer' => 'Josegonzalez\Upload\File\Transformer\DefaultTransformer',
+        // Handles writing a file to disk... or S3... or Dropbox... or FTP... or /dev/null
+        'writer' => 'Josegonzalez\Upload\File\Writer\DefaultWriter',
+    ]
         ]);
         $this->addBehavior('Timestamp');
 

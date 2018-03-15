@@ -98,12 +98,14 @@ class UsersController extends AppController
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
+            
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('Registro salvo com sucesso.'));
 
-                return $this->redirect(['action' => 'index']);
-            }
+                //return $this->redirect(['action' => 'index']);
+            }else{
             $this->Flash->error(__('Registro não pode ser salvo. Por favor, tente novamente.'));
+            }
         }
         $roles = $this->Users->Roles->find('list', ['limit' => 200]);
         $this->set(compact('user', 'roles'));

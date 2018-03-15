@@ -4,39 +4,88 @@
  * @var \App\Model\Entity\User $user
  */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Form->postLink(
-                __('Delete'),
-                ['action' => 'delete', $user->id],
-                ['confirm' => __('Are you sure you want to delete # {0}?', $user->id)]
-            )
-        ?></li>
-        <li><?= $this->Html->link(__('List Users   '), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Roles'), ['controller' => 'Roles', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Role'), ['controller' => 'Roles', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="users form large-9 medium-8 columns content">
-    <?= $this->Form->create($user) ?>
-    <fieldset>
-        <legend><?= __('Edit User') ?></legend>
-        <?php
-            echo $this->Form->control('fullName');
-            echo $this->Form->control('name');
-            echo $this->Form->control('phone');
-            echo $this->Form->control('photo');
-            echo $this->Form->control('dir');
-            echo $this->Form->control('email');
-            echo $this->Form->control('password');
-            echo $this->Form->control('active');
-            echo $this->Form->control('role_id', ['options' => $roles, 'empty' => true]);
-            echo $this->Form->control('user_id');
-        ?>
-    </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
+
+ <section class="content">
+
+      <div class="row">
+        <div class="col-md-3">
+ <?= $this->Form->create($user,['type' => 'file']) ?>
+          <!-- Profile Image -->
+          <div class="box box-primary">
+            <div class="box-body box-profile">
+              <?php echo $this->Html->image('Users/photo/'.$user->id.'/'.$user->photo, array('class' => 'profile-user-img img-responsive img-circle', 'alt' => $user->fullName)); ?>
+
+              <h3 class="profile-username text-center"><?= h($user->fullName) ?></h3>
+
+              <p class="text-muted text-center"><?= h($user->email) ?></p>
+         
+             <p class="text-muted text-center"><?= ($user->role->name) ?></p>
+            </div>
+            <!-- /.box-body -->
+          </div>
+      </div>
+       <div class="col-md-9">
+         <div class="box box-primary">
+            <div class="box-body box-profile">
+
+                <form class="form-horizontal">
+                  <div class="form-group">
+                    <label for="name" class="col-sm-2 control-label">Nome</label>
+
+                    <div class="col-sm-10">
+                      <?php
+            echo $this->Form->control('fullName',['class'=>'form-control','placeholder'=>'Nome','id'=>'name','label'=>false]);            ?>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="email" class="col-sm-2 control-label">Email</label>
+
+                    <div class="col-sm-10">
+                       <?php
+            echo $this->Form->control('email',['class'=>'form-control','placeholder'=>'Email','id'=>'email','label'=>false]);            ?>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="phone" class="col-sm-2 control-label">Telefone</label>
+
+                    <div class="col-sm-10">
+                        <?php
+            echo $this->Form->control('phone',['class'=>'form-control','placeholder'=>'Telefone','id'=>'phone','label'=>false]);            ?>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputExperience" class="col-sm-2 control-label">Ativo</label>
+
+                    <div class="col-sm-10">
+                     <?php    echo $this->Form->control('active',['label'=>'']);?>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputSkills" class="col-sm-2 control-label">Grupo</label>
+
+                    <div class="col-sm-10">
+                   <?php echo $this->Form->control('role_id', ['options' => $roles, 'empty' => true,'label'=>false,'class'=>'form-control']);?>
+                    </div>
+                  </div>
+                    <div class="form-group">
+                    <label for="inputExperience" class="col-sm-2 control-label">Foto</label>
+
+                    <div class="col-sm-10">
+                     <?php    echo $this->Form->control('photo',['label'=>'','type' => 'file']);?>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                            <?= $this->Form->button(__('Alterar'),['class'=>'btn btn-danger']) ?>
+                      
+                    </div>
+                  </div>
+                </form>
+
     <?= $this->Form->end() ?>
-</div>
+
+            </div>
+        </div>
+       </div>
+  </div>
+</section>
