@@ -9,17 +9,17 @@
 
       <div class="row">
         <div class="col-md-3">
- <?= $this->Form->create($user,['type' => 'file']) ?>
+ <?= $this->Form->create($use,['type' => 'file']) ?>
           <!-- Profile Image -->
           <div class="box box-primary">
             <div class="box-body box-profile">
-              <?php echo $this->Html->image('Users/photo/'.$user->id.'/'.$user->photo, array('class' => 'profile-user-img img-responsive img-circle', 'alt' => $user->fullName)); ?>
+              <?php echo $this->Html->image($use->photo!==null? 'Users/photo/'.$use->id.'/'.$use->photo: 'avatar.png', array('class' => 'profile-user-img img-responsive img-circle', 'alt' => $use->fullName)); ?>
 
-              <h3 class="profile-username text-center"><?= h($user->fullName) ?></h3>
+              <h3 class="profile-username text-center"><?= h($use->fullName) ?></h3>
 
-              <p class="text-muted text-center"><?= h($user->email) ?></p>
+              <p class="text-muted text-center"><?= h($use->email) ?></p>
          
-             <p class="text-muted text-center"><?= ($user->role->name) ?></p>
+            <!--  <p class="text-muted text-center"><?= ($user->roles->name) ?></p> -->
             </div>
             <!-- /.box-body -->
           </div>

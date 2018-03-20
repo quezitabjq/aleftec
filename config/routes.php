@@ -49,12 +49,20 @@ Router::scope('/', function (RouteBuilder $routes) {
      * its action called 'display', and we pass a param to select the view file
      * to use (in this case, src/Template/Pages/home.ctp)...
      */
-    $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
+    $routes->connect('/', ['controller' => 'Welcome', 'action' => 'index']);
+  $routes->extensions(['json','xml']);
+  $routes->resources('Users');
+  $routes->resources('Roles');
+
 
     /**
      * ...and connect the rest of 'Pages' controller's URLs.
      */
+  //  $routes->extensions(['json']);
     $routes->connect('/pages/*', ['controller' => 'Pages', 'action' => 'display']);
+    //outes->connect('/usuarios', ['controller' => 'Users', 'action' => 'index','_ext'=>['json'],'[method]'=>'GET']);
+    
+
 
     /**
      * Connect catchall routes for all controllers.

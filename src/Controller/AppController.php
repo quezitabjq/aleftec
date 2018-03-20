@@ -21,6 +21,7 @@ use Cake\Event\Event;
 use Cake\Mailer\Email;
 use Cake\Database\Type;
 use Cake\Core\Configure;
+use Cake\Network\Exception\ForbiddenException;
 
 /**
  * Application Controller
@@ -64,6 +65,12 @@ class AppController extends Controller
                 'controller' => 'Users',
                 'action' => 'login'
             ],
+            'unuauthorize'=>[
+          'plugin'=>false,
+          'controller'=>'Welcome',
+          'action'=>'index'
+          ],
+
             'authError' => 'Faça o login primeiramente',
             'authenticate' => [
                 'Form' => [
@@ -73,42 +80,40 @@ class AppController extends Controller
            
         ]);
 
-        $this->Auth->allow(['*','login', 'logout', 'byProfile', 'feed', 'noAuthorized','add']);
+        $this->Auth->allow(['*','login', 'logout', 'byProfile', 'feed', 'add']);
 
         $this->permissionsRolesTable = TableRegistry::get('permissions_roles'); 
          $user = $this->Auth->user();
         $this->set(compact('user'));    
+        //$this->viewBuilder()->setTheme('AdminLTE');
+        //$this->viewBuilder()->setClassName('AdminLTE.AdminLTE');  
+        
     }
 
-    public function beforeRender(Event $event)
-{
-        
-    $this->set('Auth', $this->Auth);
-        
-        $user = $this->Auth->user();
-        $this->isAuthorized($user);
-       
+    public function beforeFilter(Event $event){
+     
+     $this->viewBuilder()->setTheme('AdminLTE');
+       $this->viewBuilder()->setClassName('AdminLTE.AdminLTE');  
+if (method_exists($this, 'isAuthorized')) {
+            $this->set('Auth', $this->Auth);
+            $user = $this->Auth->user();
+            $access = $this->isAuthorized($user);      
+    }
+  }
+
+      public function beforeRender(Event $event)
+    {
         if (!array_key_exists('_serialize', $this->viewVars) &&
             in_array($this->response->type(), ['application/json', 'application/xml'])
         ) {
-           
-            $this->response->header('Access-Control-Allow-Origin', '*');
-            $this->response->header("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-            $this->response->header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT');
-            $this->response->header('Access-Control-Max-Age','172800');
-            $this->response->header('Accept','application/json');
-            $this->response->header('Content-Type','application/json; charset=utf-8;');
             $this->set('_serialize', true);
         }
+    }
+    
 
-        $this->viewBuilder()->setTheme('AdminLTE');
-        $this->viewBuilder()->setClassName('AdminLTE.AdminLTE');  
-        
-     
-}
   public function isAuthorized($user)
      {
-     /*  $controller = $this->request->params['controller']; //get current controller
+       $controller = $this->request->params['controller']; //get current controller
         $action = $this->request->params['action']; //get current action
 
        
@@ -135,18 +140,20 @@ class AppController extends Controller
             return false;
         }
        // Bloqueia acesso por padrão
-        return false;*/
+        return false;
      }
 
 
     public function addPermission($permission){
      
-            $this->Auth->allow([ $permission]);
+            $this->Auth->allow([$permission]);
         
      }
 
-    public function removePermission($permission){
-        $this->redirect(['controller' => 'users', 'action' => 'noAuthorized']);
-  
+    public function removePermission($permission){               
+  //$this->Flash->error('ERROU MANE');
+  $this->redirect($this->request->here);
+        //$this->redirect(['controller' => 'users', 'action' => 'noAuthorized']);
+
      }
 }

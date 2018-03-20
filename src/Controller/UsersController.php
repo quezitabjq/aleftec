@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Event\Event;
+use Cake\Utility\Xml;
 /**
  * Users Controller
  *
@@ -18,8 +19,7 @@ class UsersController extends AppController
     public function initialize(){
         parent::initialize();
         $this->loadComponent('RequestHandler');
-       
-     
+          
     }
     /**
      * Index method
@@ -93,13 +93,13 @@ class UsersController extends AppController
      */
     public function edit($id = null)
     {
-        $user = $this->Users->get($id, [
+        $use = $this->Users->get($id, [
             'contain' => []
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $user = $this->Users->patchEntity($user, $this->request->getData());
+            $use = $this->Users->patchEntity($use, $this->request->getData());
             
-            if ($this->Users->save($user)) {
+            if ($this->Users->save($use)) {
                 $this->Flash->success(__('Registro salvo com sucesso.'));
 
                 //return $this->redirect(['action' => 'index']);
@@ -108,8 +108,8 @@ class UsersController extends AppController
             }
         }
         $roles = $this->Users->Roles->find('list', ['limit' => 200]);
-        $this->set(compact('user', 'roles'));
-        $this->set('_serialize', ['user']);
+        $this->set(compact('use', 'roles'));
+        $this->set('_serialize', ['use']);
     }
 
     /**

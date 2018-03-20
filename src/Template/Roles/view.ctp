@@ -47,7 +47,7 @@
                <th scope="col"><?= __('Ativo') ?></th>
                 <th scope="col"><?= __('Nome da Permissão') ?></th>
               
-                <th scope="col" class="actions"><?= __('Ações') ?></th>
+              
             </tr>
             <?php foreach ($role->permissions as $permissions): ?>
             <tr>
@@ -58,11 +58,7 @@
                 <td><?= $permissions->active ? __('Sim') : __('Não'); ?></td>
                 <td><?= h($permissions->name) ?></td>
                
-                <td class="actions">
-                    <?= $this->Html->link(__('Visualizar'), ['controller' => 'Permissions', 'action' => 'view', $permissions->id],['class'=>'btn bg-purple btn-xs']) ?>
-                    <?= $this->Html->link(__('Editar'), ['controller' => 'Permissions', 'action' => 'edit', $permissions->id],['class'=>'btn btn-primary btn-xs']) ?>
-                    <?= $this->Form->postLink(__('Deletar'), ['controller' => 'Permissions', 'action' => 'delete', $permissions->id], ['confirm' => __('Are you sure you want to delete # {0}?', $permissions->id),'class'=>'btn btn-danger btn-xs']) ?>
-                </td>
+               
             </tr>
             <?php endforeach; ?>
         </thead>
@@ -98,7 +94,7 @@
             
                 <th scope="col"><?= __('Ativo') ?></th>
                 
-                <th scope="col" class="actions"><?= __('Ações') ?></th>
+              <!--   <th scope="col" class="actions"><?= __('Ações') ?></th> -->
             </tr>
             <?php foreach ($role->users as $users): ?>
             <tr>
@@ -109,11 +105,11 @@
             
                 <td><?= $users->active ? __('Sim') : __('Não'); ?></td>
               
-                <td class="actions">
+                <!-- <td class="actions">
                     <?= $this->Html->link(__('Visualizar'), ['controller' => 'Users', 'action' => 'view', $users->id],['class'=>'btn bg-purple btn-xs']) ?>
                     <?= $this->Html->link(__('Editar'), ['controller' => 'Users', 'action' => 'edit', $users->id],['class'=>'btn btn-primary btn-xs']) ?>
                     <?= $this->Form->postLink(__('Deletar'), ['controller' => 'Users', 'action' => 'delete', $users->id], ['confirm' => __('Are you sure you want to delete # {0}?', $users->id),'class'=>'btn btn-danger btn-xs']) ?>
-                </td>
+                </td> -->
             </tr>
             <?php endforeach; ?>
         </thead>

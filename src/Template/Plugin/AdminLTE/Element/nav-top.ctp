@@ -21,13 +21,13 @@ if (file_exists($file)) {
       <!-- User Account: style can be found in dropdown.less -->
       <li class="dropdown user user-menu">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-          <?php echo $this->Html->image('Users/photo/'.$user->id.'/'.$user->photo, array('class' => 'user-image', 'alt' => 'User Image')); ?>
+          <?php echo $this->Html->image($user['photo']!==null? 'Users/photo/'.$user['id'].'/'.$user['photo']: 'avatar.png', array('class' => 'user-image', 'alt' => 'User Image')); ?>
           <span class="hidden-xs"><?php   echo $user['email'] ?></span>
         </a>
         <ul class="dropdown-menu">
           <!-- User image -->
           <li class="user-header">
-            <?php echo $this->Html->image('user2-160x160.jpg', array('class' => 'img-circle', 'alt' => 'User Image')); ?>
+            <?php echo $this->Html->image($user['photo']!==null? 'Users/photo/'.$user['id'].'/'.$user['photo']: 'avatar.png', array('class' => 'img-circle', 'alt' => 'User Image')); ?>
 
             <p>
               <?php   echo $user['fullName'] ?> - 
@@ -39,7 +39,7 @@ if (file_exists($file)) {
           <!-- Menu Footer-->
           <li class="user-footer">
             <div class="pull-left">
-               <?php echo $this->Html->link(__('Perfil'), ['controller'=>'users','action' => 'view', $user['id']],['class'=>'btn btn-default btn-flat']) ?></a>
+               <?php echo $this->Html->link(__('Perfil'), ['controller'=>'users','action' => 'edit', $user['id']],['class'=>'btn btn-default btn-flat']) ?></a>
             </div>
             <div class="pull-right">
               <a href="<?php echo $this->Url->build('/users/logout')?>" class="btn btn-default btn-flat">Sair</a>

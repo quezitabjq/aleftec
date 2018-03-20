@@ -1,61 +1,58 @@
 <?php
 /**
  * @var \App\View\AppView $this
- * @var \App\Model\Entity\Permission[]|\Cake\Collection\CollectionInterface $permissions
+ * @var \App\Model\Entity\Role[]|\Cake\Collection\CollectionInterface $roles
  */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('New Permission'), ['action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Roles'), ['controller' => 'Roles', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Role'), ['controller' => 'Roles', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="permissions index large-9 medium-8 columns content">
-    <h3><?= __('Permissions') ?></h3>
-    <table cellpadding="0" cellspacing="0">
+<section class="content">
+<div class="row ">
+
+<div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Permissões</h3>
+              <div class="box-tools">
+             
+            <ul class="pagination  pagination-sm no-margin pull-right">
+                <?= $this->Paginator->prev('&laquo; ' . __('previous'), ['escape'=>false]) ?>
+                <?= $this->Paginator->numbers(['escape'=>false]) ?>
+                <?= $this->Paginator->next(__('next') . ' &raquo;', ['escape'=>false]) ?>
+            </ul>
+ 
+              </div>
+            </div>
+<div class="box-body">
+<div class="table-responsive">
+    <table class="table  table-bordered table-hover">
         <thead>
-            <tr>
-                <th scope="col"><?= $this->Paginator->sort('id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('controller') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('action') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('created') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('modified') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('active') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('name') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('icon') ?></th>
+           <tr>
+                <th scope="col"><?= $this->Paginator->sort('controller','Controller') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('action','Ação') ?></th>
+                 <th scope="col"><?= $this->Paginator->sort('name','Descrição') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
         </thead>
         <tbody>
             <?php foreach ($permissions as $permission): ?>
             <tr>
-                <td><?= $this->Number->format($permission->id) ?></td>
                 <td><?= h($permission->controller) ?></td>
                 <td><?= h($permission->action) ?></td>
-                <td><?= h($permission->created) ?></td>
-                <td><?= h($permission->modified) ?></td>
-                <td><?= h($permission->active) ?></td>
-                <td><?= h($permission->name) ?></td>
-                <td><?= h($permission->icon) ?></td>
+                 <td><?= $permission->name; ?></td>
                 <td class="actions">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $permission->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $permission->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $permission->id], ['confirm' => __('Are you sure you want to delete # {0}?', $permission->id)]) ?>
+                    <?= $this->Html->link(__('Visualizar'), ['action' => 'view', $permission->id], ['class'=>'btn bg-purple btn-xs']) ?>
+                    <?= $this->Html->link(__('Editar'), ['action' => 'edit', $permission->id], ['class'=>'btn btn-primary btn-xs']) ?>
+                     <?= $this->Form->postLink(__('Deletar'), ['action' => 'delete', $permission->id], ['confirm' => __('Tem certeza de quer deletar # {0}?', $permission->id), 'class'=>'btn btn-danger btn-xs']) ?>
                 </td>
             </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
     <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('first')) ?>
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-            <?= $this->Paginator->last(__('last') . ' >>') ?>
-        </ul>
-        <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
-    </div>
+       <p><?= $this->Paginator->counter(__('Página {{page}} de {{pages}}, 
+mostrando {{current}} 
+registros fora de
+         {{count}} total, 
+começando no registro {{start}}, 
+que termina em {{end}}')) ?></p>
 </div>
+</div>
+</section>

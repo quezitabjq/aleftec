@@ -32,16 +32,16 @@ class MenuCell extends Cell
      */
      public function display($user)
     {
-       
+       /*
         $menuCategories = $this->getMenusCategories($user);
         $menuSubcategories = $this->getMenusSubcategories($user);
         
-        $menuAgendas = $this->getMenusEvents($user);
+        $menuAgendas = $this->getMenusEvents($user);*/
        
         $menuUsers = $this->getMenusUsers($user);
         $menuRoles = $this->getMenusRoles($user);
         $menuPermissions = $this->getMenusPermissions($user);
-        $menuCalendar = $this->getMenusCalendar($user);
+       /* $menuCalendar = $this->getMenusCalendar($user);
         //var_dump($menuPermissions);
         $menuContacts = $this->getMenusContacts($user);
 
@@ -51,19 +51,20 @@ class MenuCell extends Cell
 
         $menuProspections=$this->getMenusPolls($user);
 
-        $this->set('menuCategories', $menuCategories);
+       */ 
+        /*$this->set('menuCategories', $menuCategories);
         $this->set('menuSubcategories', $menuSubcategories);
         $this->set('menuAgendas', $menuAgendas);
         $this->set('menuCalendar', $menuCalendar);
-
+  */
         $this->set('menuUsers', $menuUsers);
         $this->set('menuRoles', $menuRoles);
         $this->set('menuPermissions', $menuPermissions);
-        $this->set('menuContacts', $menuContacts);
+        /*$this->set('menuContacts', $menuContacts);
         $this->set('menuServices', $menuServices);
         $this->set('menuStatus', $menuStatus);
         $this->set('menuProspections', $menuProspections);
-        
+        */
     }
 
     public function getMenusCategories($user)
@@ -170,7 +171,7 @@ class MenuCell extends Cell
     public function getMenusUsers($user)
     {
         $this->loadModel('Permissions');
-
+  
        return  $this->Permissions->find()
         ->join([
             'pr' => [

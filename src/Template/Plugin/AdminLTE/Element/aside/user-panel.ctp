@@ -11,7 +11,7 @@ if (file_exists($file)) {
 ?>
 <div class="user-panel">
     <div class="pull-left image">
-        <?php echo $this->Html->image('Users/photo/'.$user->id.'/'.$user->photo, array('class' => 'img-circle', 'alt' => 'User Image')); ?>
+        <?php echo $this->Html->image($user['photo']!==null? 'Users/photo/'.$user['id'].'/'.$user['photo']: 'avatar.png', array('class' => 'img-circle', 'alt' => 'User Image')); ?>
     </div>
     <div class="pull-left info">
         <p><?php   echo $user['name'] ?></p>

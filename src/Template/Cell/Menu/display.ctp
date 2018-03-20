@@ -1,6 +1,6 @@
+   
 
-
-<li class="treeview">
+ <!--<li class="treeview">
     <a href="#">
        	<i class="fa fa-list"></i>
         <span>AGENDA</span> 
@@ -94,21 +94,22 @@
           	</ul>
         </li>
     	<?php endif; ?>
-    </ul>
-</li>
+    </ul> 
+</li>-->
 
 
 
 <li class="treeview active">
     <a href="#">
-        <i class="fa fa-user"></i>
-        <span>USUÁRIOS</span>      
+        <i class="fa  fa-cog"></i>
+        <span>Configurações</span>      
     </a>
     <ul class="treeview-menu">
        
        
 
-    	<?php if(sizeof($menuRoles)> 0): ?>
+    	<?php 
+         if(sizeof($menuRoles)> 0): ?>
         <li class="treeview">
           	<a href="#">
             	<i class="fa fa-users"></i>
@@ -130,11 +131,11 @@
         </li>
         
     	<?php endif; ?>
-    	<?php if(sizeof($menuUsers) > 0): ?>
+    	<?php  if(sizeof($menuUsers) > 0): ?>
         <li class="treeview">
       		<a href="#">
-		        <i class="glyphicon glyphicon-cog"></i>
-		        <span>GERENCIAR</span>
+		        <i class="fa fa-user"></i>
+		        <span>Usuários</span>
           	</a>
 		    <ul class="treeview-menu">
 		    <?php 
@@ -155,7 +156,7 @@
         <li class="treeview">
           	<a href="#">
             	<i class="fa fa-wrench"></i>
-            	<span>PERMISSÕES</span>
+            	<span>Permissões</span>
           	</a>
 		    <ul class="treeview-menu">
         	<?php 

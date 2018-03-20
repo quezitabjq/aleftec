@@ -43,7 +43,7 @@ class UsersTable extends Table
         $this->addBehavior('Josegonzalez/Upload.Upload', [
            'photo' => [
          
-        'path' => 'webroot{DS}img{DS}{model}{DS}{field}{DS}{primaryKey}',
+        'path' => '{DS}img{DS}{DS}{model}{DS}{field}{DS}{primaryKey}',
         'pathProcessor' => 'Josegonzalez\Upload\File\Path\DefaultProcessor',
         // Allows you to create new files from the original source,
         // or possibly even modify/remove the original source file
