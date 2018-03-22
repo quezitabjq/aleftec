@@ -21,6 +21,7 @@ class UsersController extends AppController
         $this->loadComponent('RequestHandler');
           
     }
+   
     /**
      * Index method
      *

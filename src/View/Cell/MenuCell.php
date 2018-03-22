@@ -3,14 +3,16 @@ namespace App\View\Cell;
 
 use Cake\View\Cell;
 use Cake\ORM\TableRegistry;
+use Cake\View\CellTrait;
 /**
  * Menu cell
  */
 class MenuCell extends Cell
 {
 
+     use CellTrait;
     private $permissionsRolesTable;
-
+    //public $menuFilho;
     /**
      * List of valid options that can be passed into this
      * cell's constructor.
@@ -35,317 +37,80 @@ class MenuCell extends Cell
        /*
         $menuCategories = $this->getMenusCategories($user);
         $menuSubcategories = $this->getMenusSubcategories($user);
-        
-        $menuAgendas = $this->getMenusEvents($user);*/
-       
-        $menuUsers = $this->getMenusUsers($user);
-        $menuRoles = $this->getMenusRoles($user);
-        $menuPermissions = $this->getMenusPermissions($user);
-       /* $menuCalendar = $this->getMenusCalendar($user);
-        //var_dump($menuPermissions);
-        $menuContacts = $this->getMenusContacts($user);
-
-        $menuServices = $this->getMenusServices($user);
-
-        $menuStatus = $this->getMenusStatus($user);
-
-        $menuProspections=$this->getMenusPolls($user);
-
-       */ 
-        /*$this->set('menuCategories', $menuCategories);
-        $this->set('menuSubcategories', $menuSubcategories);
-        $this->set('menuAgendas', $menuAgendas);
-        $this->set('menuCalendar', $menuCalendar);
-  */
-        $this->set('menuUsers', $menuUsers);
-        $this->set('menuRoles', $menuRoles);
-        $this->set('menuPermissions', $menuPermissions);
-        /*$this->set('menuContacts', $menuContacts);
-        $this->set('menuServices', $menuServices);
-        $this->set('menuStatus', $menuStatus);
-        $this->set('menuProspections', $menuProspections);
         */
-    }
-
-    public function getMenusCategories($user)
-    {
-        $this->loadModel('Permissions');
-
-        return  $this->Permissions->find()
-        ->join([
-            'pr' => [
-                'table' => 'permissions_roles',
-                'type' => 'INNER',
-                'conditions' => 'pr.permission_id = Permissions.id',
-            ],
-            'r' => [
-                'table' => 'roles',
-                'type' => 'INNER',
-                'conditions' => 'r.id = pr.role_id',
-            ]
-        ])
-        ->where(['pr.role_id' => $user['role_id'], 'controller' => 'eventTypes',
-                'action IN' => ['add', 'index']
-                        ])
-        ->select(['pr.role_id', 'controller', 'action', 'name', 'icon'])
-        ->distinct()->all();
-        
-    }
-
-    public function getMenusSubcategories($user)
-    {
-       $this->loadModel('Permissions');
       
-        return $this->Permissions->find()
-         ->join([
-            'pr' => [
-                'table' => 'permissions_roles',
-                'type' => 'INNER',
-                'conditions' => 'pr.permission_id = Permissions.id',
-            ],
-            'r' => [
-                'table' => 'roles',
-                'type' => 'INNER',
-                'conditions' => 'r.id = pr.role_id',
-            ]
-        ])
-        ->where(['pr.role_id' => $user['role_id'], 'controller' => 'subcategories',
-                'action IN' => ['add', 'index']
-                        ])
-        ->select(['pr.role_id', 'controller', 'action', 'name', 'icon'])
-        ->distinct()->all();
-        
-    }
-
-     public function getMenusServices($user)
-    {
-       $this->loadModel('Permissions');
+       $menuPai = $this->getMenusPais($user);
+       
+     
       
-        return $this->Permissions->find()
-         ->join([
-            'pr' => [
-                'table' => 'permissions_roles',
-                'type' => 'INNER',
-                'conditions' => 'pr.permission_id = Permissions.id',
-            ],
-            'r' => [
-                'table' => 'roles',
-                'type' => 'INNER',
-                'conditions' => 'r.id = pr.role_id',
-            ]
-        ])
-        ->where(['pr.role_id' => $user['role_id'], 'controller' => 'services',
-                'action IN' => ['add', 'index']
-                        ])
-        ->select(['pr.role_id', 'controller', 'action', 'name', 'icon'])
-        ->distinct()->all();
-        
-    }
-
-    public function getMenusEvents($user)
-    {
-        $this->loadModel('Permissions');
-
-        return  $this->Permissions->find()
-         ->join([
-            'pr' => [
-                'table' => 'permissions_roles',
-                'type' => 'INNER',
-                'conditions' => 'pr.permission_id = Permissions.id',
-            ],
-            'r' => [
-                'table' => 'roles',
-                'type' => 'INNER',
-                'conditions' => 'r.id = pr.role_id',
-            ]
-        ])
-        ->where(['pr.role_id' => $user['role_id'],
-            'controller' => 'events',
-            'action IN' => ['add', 'index']
-        ])
-        ->select(['pr.role_id', 'controller', 'action', 'name', 'icon'])
-        ->distinct()->all();
-        
-    }
-
-    public function getMenusUsers($user)
-    {
-        $this->loadModel('Permissions');
-  
-       return  $this->Permissions->find()
-        ->join([
-            'pr' => [
-                'table' => 'permissions_roles',
-                'type' => 'INNER',
-                'conditions' => 'pr.permission_id = Permissions.id',
-            ],
-            'r' => [
-                'table' => 'roles',
-                'type' => 'INNER',
-                'conditions' => 'r.id = pr.role_id',
-            ]
-        ])
-        ->where(['pr.role_id' => $user['role_id'], 'controller' => 'users',
-                'action IN' => ['add', 'index']
-        ])
-        ->select(['pr.role_id', 'controller', 'action', 'name', 'icon'])
-        ->distinct()->all();
+        $menuFilho = $this->getMenusFilhos($user, $menuPai);
+        $menuNeto = $this->getMenusFilhos($user,$menuFilho);
         
        
+        $this->set('menuPai', $menuPai);
+        $this->set('menuFilho', $menuFilho);
+        $this->set('menuNeto', $menuNeto);
+     
+      
+    }
+
+    public function getMenusPais($user)
+    {
+        $this->loadModel('Permissions');
+
+        $consulta=  $this->Permissions->find()
+        ->join([
+            'pr' => [
+                'table' => 'permissions_roles',
+                'type' => 'INNER',
+                'conditions' => 'pr.permission_id = Permissions.id',
+            ],
+            'r' => [
+                'table' => 'roles',
+                'type' => 'INNER',
+                'conditions' => 'r.id = pr.role_id',
+            ]
+        ])
+        ->where(['pr.role_id' => $user['role_id'],'pai is null'])
+       // ->order(['pai' => 'DESC'])
+        ->select(['pr.role_id', 'controller', 'action', 'name', 'icon','Permissions.id','pai'])
+        ->distinct()->all();
+       
+        return $consulta;
+    }
+
+    public function getMenusFilhos($user, $menuPai)
+    {
+      $consulta=[]; 
+      $vari=$menuPai->toArray(); 
+ // var_dump(json_encode($menuPai));
+       $this->loadModel('Permissions');
+      for($i=0 ; $i<sizeof($vari) ; $i++) {
+            $consulta[$i]=$vari[$i]->id;
+      
+      }
+     //var_dump(json_encode($consulta));
+        
+         return $this->Permissions->find()
+         ->join([
+            'pr' => [
+                'table' => 'permissions_roles',
+                'type' => 'INNER',
+                'conditions' => 'pr.permission_id = Permissions.id',
+            ],
+            'r' => [
+                'table' => 'roles',
+                'type' => 'INNER',
+                'conditions' => 'r.id = pr.role_id',
+            ]
+        ])
+        ->where(['pr.role_id' => $user['role_id'], 'Permissions.pai in' => $consulta,'action in'=>['index','add','']])
+        ->select(['pr.role_id', 'controller', 'action', 'name', 'icon','Permissions.id','pai'])
+        ->all();
+       
+        
     }
 
     
-    public function getMenusRoles($user)
-    {
-        $this->loadModel('Permissions');
-
-       return  $this->Permissions->find()
-         ->join([
-            'pr' => [
-                'table' => 'permissions_roles',
-                'type' => 'INNER',
-                'conditions' => 'pr.permission_id = Permissions.id',
-            ],
-            'r' => [
-                'table' => 'roles',
-                'type' => 'INNER',
-                'conditions' => 'r.id = pr.role_id',
-            ]
-        ])
-        ->where(['pr.role_id' => $user['role_id'], 
-            'controller' =>'roles',
-            'action IN' => ['add', 'index']
-        ])
-        ->select(['pr.role_id', 'controller', 'action', 'name', 'icon'])
-        ->distinct()->all();
-        
-       
-    }
-
-    public function getMenusPermissions($user)
-    {
-        $this->loadModel('Permissions');
-        return  $this->Permissions->find()
-        ->join([
-            'pr' => [
-                'table' => 'permissions_roles',
-                'type' => 'INNER',
-                'conditions' => 'pr.permission_id = Permissions.id',
-            ],
-            'r' => [
-                'table' => 'roles',
-                'type' => 'INNER',
-                'conditions' => 'r.id = pr.role_id',
-            ]
-        ])
-        ->where(['pr.role_id' => $user['role_id'],
-            'controller' => 'permissions',
-            'action IN' => ['add', 'index']
-        ])
-        ->select(['pr.role_id', 'controller', 'action', 'name', 'icon'])
-        ->distinct()->all();
-        
-        
-        
-       
-    }
-
-    public function getMenusCalendar($user)
-    {
-        $this->loadModel('Permissions');
-
-       return  $this->Permissions->find()
-         ->join([
-            'pr' => [
-                'table' => 'permissions_roles',
-                'type' => 'INNER',
-                'conditions' => 'pr.permission_id = Permissions.id',
-            ],
-            'r' => [
-                'table' => 'roles',
-                'type' => 'INNER',
-                'conditions' => 'r.id = pr.role_id',
-            ]
-        ])
-        ->where(['pr.role_id' => $user['role_id'], 
-            'controller' =>'calendar',
-            'action IN' => ['add', 'index']
-        ])
-        ->select(['pr.role_id', 'controller', 'action', 'name', 'icon'])
-        ->distinct()->all();    
-    }
-
-     public function getMenusContacts($user)
-    {
-        $this->loadModel('Permissions');
-
-       return  $this->Permissions->find()
-         ->join([
-            'pr' => [
-                'table' => 'permissions_roles',
-                'type' => 'INNER',
-                'conditions' => 'pr.permission_id = Permissions.id',
-            ],
-            'r' => [
-                'table' => 'roles',
-                'type' => 'INNER',
-                'conditions' => 'r.id = pr.role_id',
-            ]
-        ])
-        ->where(['pr.role_id' => $user['role_id'], 
-            'controller' =>'prospections',
-            'action IN' => ['add', 'index']
-        ])
-        ->select(['pr.role_id', 'controller', 'action', 'name', 'icon'])
-        ->distinct()->all();    
-    }
-
-    public function getMenusStatus($user){
-        $this->loadModel('Permissions');
-
-        return  $this->Permissions->find()
-         ->join([
-            'pr' => [
-                'table' => 'permissions_roles',
-                'type' => 'INNER',
-                'conditions' => 'pr.permission_id = Permissions.id',
-            ],
-            'r' => [
-                'table' => 'roles',
-                'type' => 'INNER',
-                'conditions' => 'r.id = pr.role_id',
-            ]
-        ])
-        ->where(['pr.role_id' => $user['role_id'], 
-            'controller' =>'status',
-            'action IN' => ['add', 'index']
-        ])
-        ->select(['pr.role_id', 'controller', 'action', 'name', 'icon'])
-        ->distinct()->all();   
-    }
-
-    public function getMenusPolls($user){
-         $this->loadModel('Permissions');
-
-        return  $this->Permissions->find()
-         ->join([
-            'pr' => [
-                'table' => 'permissions_roles',
-                'type' => 'INNER',
-                'conditions' => 'pr.permission_id = Permissions.id',
-            ],
-            'r' => [
-                'table' => 'roles',
-                'type' => 'INNER',
-                'conditions' => 'r.id = pr.role_id',
-            ]
-        ])
-        ->where(['pr.role_id' => $user['role_id'], 
-            'controller' =>'polls',
-            'action IN' => ['add', 'index']
-        ])
-        ->select(['pr.role_id', 'controller', 'action', 'name', 'icon'])
-        ->distinct()->all();   
-    }
     
 }

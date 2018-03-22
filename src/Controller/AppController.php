@@ -58,18 +58,14 @@ class AppController extends Controller
         $this->loadComponent('Flash');
         $this->loadComponent('Auth', [
             'loginRedirect' => [
-                'controller' => 'Welcome'
-                
+                'controller' => 'Welcome',
+                 'action' => 'index'
             ],
             'logoutRedirect' => [
                 'controller' => 'Users',
                 'action' => 'login'
             ],
-            'unuauthorize'=>[
-          'plugin'=>false,
-          'controller'=>'Welcome',
-          'action'=>'index'
-          ],
+            
 
             'authError' => 'Faça o login primeiramente',
             'authenticate' => [
@@ -77,10 +73,18 @@ class AppController extends Controller
                     'fields' => ['username' => 'email', 'password' => 'password']
                 ]
             ],
+            
+         'loginAction'=>[
+          'controller'=>'Users',
+          'action'=>'login'],
+                'logoutRedirect'=>[
+                'controller'=>'Users',
+                'action'=>'login'
+            ]            
            
         ]);
 
-        $this->Auth->allow(['*','login', 'logout', 'byProfile', 'feed', 'add']);
+        $this->Auth->allow(['*','login', 'logout', 'add']);
 
         $this->permissionsRolesTable = TableRegistry::get('permissions_roles'); 
          $user = $this->Auth->user();
@@ -151,9 +155,8 @@ if (method_exists($this, 'isAuthorized')) {
      }
 
     public function removePermission($permission){               
-  //$this->Flash->error('ERROU MANE');
-  $this->redirect($this->request->here);
-        //$this->redirect(['controller' => 'users', 'action' => 'noAuthorized']);
+  
+        $this->redirect(['controller' => 'users', 'action' => 'noAuthorized']);
 
      }
 }

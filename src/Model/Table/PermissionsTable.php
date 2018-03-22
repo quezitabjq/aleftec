@@ -71,11 +71,7 @@ class PermissionsTable extends Table
             ->requirePresence('controller', 'create')
             ->notEmpty('controller');
 
-        $validator
-            ->scalar('action')
-            ->maxLength('action', 30)
-            ->requirePresence('action', 'create')
-            ->notEmpty('action');
+     
 
         $validator
             ->boolean('active')

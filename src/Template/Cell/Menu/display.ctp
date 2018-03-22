@@ -1,180 +1,45 @@
-   
-
- <!--<li class="treeview">
-    <a href="#">
-       	<i class="fa fa-list"></i>
-        <span>AGENDA</span> 
-    </a>
-
-    <ul class="treeview-menu">
-         <?php if(sizeof($menuContacts)> 0): ?>
-            <li class="treeview">
-                <a href="#">
-                    <i class="fa fa-phone"></i>
-                    <span>CONTATOS</span>
-                </a>
-                <ul class="treeview-menu">
-                <?php 
-
-                foreach ($menuContacts as $menu) :
-                    if($menu->controller == 'prospections'): ?>
-                        <li>
-                            <?= $this->Html->link(__(' '. $menu->name), ['controller' => $menu->controller,'action' => $menu->action], ["class" => $menu->icon]) ?>
-                        </li>
-                <?php   
-                    endif; 
-                endforeach;
-                ?>
-
-                </ul>
-            </li>
-        <?php endif; ?>
-        
-        <?php if(sizeof($menuCategories)> 0 ): ?>
-       	<li class="treeview">
-            <a href="#">
-                <i class="glyphicon glyphicon-th-list"></i>
-                <span>CATEGORIA</span> 
-            </a>
-            <ul class="treeview-menu">
-		    <?php 
-		    foreach ($menuCategories as $menu) :
-		        if($menu->controller == 'eventTypes'): ?>
-					<li><?= $this->Html->link(__(' '. $menu->name), ['controller' => $menu->controller,'action' => $menu->action], ["class" => $menu->icon]) ?></li>
-			<?php	
-				endif; 
-			endforeach;
-			?>
-			</ul>
-        </li>
-        <?php endif; ?>
-        <?php if(sizeof($menuSubcategories) > 0 ): ?>
-        <li class="treeview">
-            <a href="#">
-            	<i class=" glyphicon glyphicon-th-list"></i>
-                <span>SUBCATEGORIAS</span> 
-            </a>
-            <ul class="treeview-menu">
-            <?php 
-		    foreach ($menuSubcategories as $menu) :
-		        if($menu->controller == 'services'): ?>
-					<li><?= $this->Html->link(__(' '. $menu->name), ['controller' => $menu->controller,'action' => $menu->action], ["class" => $menu->icon]) ?></li>
-			<?php	
-				endif; 
-			endforeach;
-			?>
-
-            </ul>
-        </li>
-        <?php endif; ?>
-        <?php if(sizeof($menuAgendas)> 0 ): ?>
-        <li class="treeview">
-			<a href="#">
-            	<i class="fa fa-calendar"></i>
-            	<span>GERENCIAR</span>
-            </a>
-          	<ul class="treeview-menu">
-            <?php 
-		    foreach ($menuAgendas as $menu) :
-		        if($menu->controller == 'events'): ?>
-					<li><?= $this->Html->link(__(' '. $menu->name), ['controller' => $menu->controller,'action' => $menu->action], ["class" => $menu->icon]) ?></li>
-			<?php	
-				endif; 
-			endforeach;
-
-            foreach ($menuCalendar as $menu) :
-                if($menu->controller == 'calendar'): ?>
-                    <li><?= $this->Html->link(__(' '. $menu->name), ['controller' => $menu->controller,'action' => $menu->action], ["class" => $menu->icon]) ?></li>
-            <?php   
-                endif; 
-            endforeach;
-			?>
-            
-			
-          	</ul>
-        </li>
-    	<?php endif; ?>
-    </ul> 
-</li>-->
 
 
+<?php if(sizeof($menuPai)> 0):  ?>
 
-<li class="treeview active">
-    <a href="#">
-        <i class="fa  fa-cog"></i>
-        <span>Configurações</span>      
-    </a>
-    <ul class="treeview-menu">
-       
+<?php foreach ($menuPai as $menu) : ?>
+
+<?php if($menu['pai']==NULL ):?>
+<li class="treeview ">
+    <?= $menu->action ? $this->Html->link(__(' '. $menu->name), ['controller' => $menu->controller,'action' => $menu->action], ["class" => $menu->icon]): $this->Html->link(' '.$menu->name,'#',['class'=>$menu->icon])?>
+
+    <?php if(sizeof($menuFilho)> 0):  ?>
+
        
 
-    	<?php 
-         if(sizeof($menuRoles)> 0): ?>
-        <li class="treeview">
-          	<a href="#">
-            	<i class="fa fa-users"></i>
-            	<span>PERFIL</span>
-          	</a>
-		    <ul class="treeview-menu">
-        	<?php 
-		    foreach ($menuRoles as $menu) :
-		        if($menu->controller == 'roles'): ?>
-					<li>
-						<?= $this->Html->link(__(' '. $menu->name), ['controller' => $menu->controller,'action' => $menu->action], ["class" => $menu->icon]) ?>
-					</li>
-			<?php	
-				endif; 
-			endforeach;
-			?>
+        <?php foreach ($menuFilho as $filho) : ?>
+        <?php if($filho['pai']==$menu['id'] ):?>
+             <ul class="treeview-menu">
+        <li>
+            <?= $filho->action ? $this->Html->link(__(' '. $filho->name), ['controller' => $filho->controller,'action' => $filho->action], ["class" => $filho->icon]): $this->Html->link(' '.$filho->name,'#',['class'=>$filho->icon])?>
+            <?php if(sizeof($menuNeto)> 0):  ?>
+         
 
-            </ul>
-        </li>
-        
-    	<?php endif; ?>
-    	<?php  if(sizeof($menuUsers) > 0): ?>
-        <li class="treeview">
-      		<a href="#">
-		        <i class="fa fa-user"></i>
-		        <span>Usuários</span>
-          	</a>
-		    <ul class="treeview-menu">
-		    <?php 
-		    foreach ($menuUsers as $menu) :
-		        if($menu->controller == 'users'): ?>
-					<li>
-						<?= $this->Html->link(__(' '. $menu->name), ['controller' => $menu->controller,'action' => $menu->action], ["class" => $menu->icon]) ?>
-					</li>
-			<?php	
-				endif; 
-			endforeach;
-			?>
-		    </ul>
-		</li>
-		<?php endif; ?>
+                <?php foreach ($menuNeto as $neto) : ?>
 
-		<?php if(sizeof($menuPermissions) >= 1): ?>
-        <li class="treeview">
-          	<a href="#">
-            	<i class="fa fa-wrench"></i>
-            	<span>Permissões</span>
-          	</a>
-		    <ul class="treeview-menu">
-        	<?php 
-		    foreach ($menuPermissions as $menu) :
-		        //if($menu->controller == 'permissions'): ?>
-					<li>
-						<?= $this->Html->link(__(' '. $menu->name), ['controller' => $menu->controller,'action' => $menu->action], ["class" => $menu->icon]) ?>
-					</li>
-			<?php	
-				//endif; 
-			endforeach;
-			?>
-			
-            </ul>
+                <?php if($neto['pai']==$filho['id'] ):?>
+   <ul class="treeview-menu">
+                <li>
+                    <?= $neto->action ? $this->Html->link(__(' '. $neto->name), ['controller' => $neto->controller,'action' => $neto->action], ["class" => $neto->icon]): $this->Html->link(' '.$neto->name,'#',['class'=>$neto->icon])?>
+                </li>
+                 </ul>
+                <?php
+            endif;
+             endforeach; ?>
+            <?php
+            endif;?>
         </li>
-        
-    	<?php endif; ?>
-    </ul>
+        </ul> 
+        <?php
+            endif;
+             endforeach; ?>
+    
+    <?php endif;?>
 </li>
 
-         
+<?php   endif; endforeach; endif; ?>
