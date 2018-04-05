@@ -9,7 +9,7 @@ use Cake\Validation\Validator;
 /**
  * Generos Model
  *
- * @property \Cake\ORM\Association\HasMany $Livros
+ * @property \App\Model\Table\LivrosTable|\Cake\ORM\Association\HasMany $Livros
  *
  * @method \App\Model\Entity\Genero get($primaryKey, $options = [])
  * @method \App\Model\Entity\Genero newEntity($data = null, array $options = [])
@@ -17,7 +17,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\Genero|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\Genero patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\Genero[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\Genero findOrCreate($search, callable $callback = null)
+ * @method \App\Model\Entity\Genero findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
@@ -34,9 +34,9 @@ class GenerosTable extends Table
     {
         parent::initialize($config);
 
-        $this->table('generos');
-        $this->displayField('descricao');
-        $this->primaryKey('id');
+        $this->setTable('generos');
+        $this->setDisplayField('descricao');
+        $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
 
@@ -55,13 +55,15 @@ class GenerosTable extends Table
     {
         $validator
             ->integer('id')
-            ->allowEmpty('id', 'create');
+            ->requirePresence('id', 'create')
+            ->notEmpty('id');
 
         $validator
+            ->scalar('descricao')
+            ->maxLength('descricao', 250)
             ->requirePresence('descricao', 'create')
             ->notEmpty('descricao');
 
-     
         return $validator;
     }
 }

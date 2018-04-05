@@ -8,9 +8,8 @@ use Cake\ORM\Entity;
  *
  * @property int $id
  * @property string $descricao
- * @property int $cod
- * @property \Cake\I18n\Time $created
- * @property \Cake\I18n\Time $modified
+ * @property \Cake\I18n\FrozenTime $created
+ * @property \Cake\I18n\FrozenTime $modified
  *
  * @property \App\Model\Entity\Livro[] $livros
  */
@@ -27,7 +26,10 @@ class Genero extends Entity
      * @var array
      */
     protected $_accessible = [
-        '*' => true,
-        'id' => false
+        'id' => true,
+        'descricao' => true,
+        'created' => true,
+        'modified' => true,
+        'livros' => true
     ];
 }

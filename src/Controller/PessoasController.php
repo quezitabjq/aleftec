@@ -54,13 +54,13 @@ class PessoasController extends AppController
         $pessoa = $this->Pessoas->newEntity();
         if ($this->request->is('post')) {
                
-            //$lider = $this->Pessoas->get($this->request->data['pessoa_id']);
-            //if($lider){
+            $lider = $this->Pessoas->get($this->request->data['pessoa_id']);
+            if($lider){
             $this->request->data['nivel']=$lider['nivel']+1;
-           // }
-            //else{
+            }
+           else{
               $this->request->data['nivel']=0;  
-            //}
+           }
             $pessoa = $this->Pessoas->patchEntity($pessoa, $this->request->data);
             if ($this->Pessoas->save($pessoa)) {
                 $this->Flash->success(__('Registro Salvo com Sucesso'));

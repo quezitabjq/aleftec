@@ -2,7 +2,6 @@
 namespace App\Controller;
 use Cake\ORM\TableRegistry;
 use App\Controller\AppController;
-
 /**
  * Cultosalaalunos Controller
  *
@@ -34,9 +33,28 @@ class CultosalaalunosController extends AppController
      * @return \Cake\Network\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
+
+    public function getAlunosAll()
+{
+    if ($this->requrest->is('ajax')) {
+        $this->autoRender = false;
+        
+        $name = $this->request->query['term'];
+        $results = $this->Cultosalaalunos->Alunos->find('all', [
+            'conditions' => [ 
+                'nome LIKE' => '%'.$name . '%'
+            ]
+        ])->contain('Criancas');
+        $resultsArr = [];
+        foreach ($results as $result) {
+             $resultsArr[] =['label' => $result['nome'], 'value' => $result['']];
+        }
+        echo json_encode($resultsArr);
+    }
+}
     public function view($id = null)
     { 
-
+  
         $cultosalaaluno = $this->Cultosalaalunos->get($id, [
             'contain' => []
         ]);
@@ -48,7 +66,8 @@ class CultosalaalunosController extends AppController
           $alunos=$alunoTable->get($cultosalaaluno['aluno_id'], [
             'contain' => ['Criancas']
         ]);
-       
+
+        
         $this->set(compact('cultosalaaluno', 'cultos', 'alunos','cultosalas'));
         $this->set('_serialize', ['cultosalaaluno']);
     }
@@ -67,19 +86,24 @@ class CultosalaalunosController extends AppController
                        if ($this->Cultosalaalunos->save($cultosalaaluno)) {
                 $this->Flash->success(__('Registro Salvo com Sucesso'));
 
-                return $this->redirect(['action' => 'view']);
+                return $this->redirect(['action' => 'view',$cultosalaaluno->id]);
             } else {
                 $this->Flash->error(__('The cultosalaaluno could not be saved. Please, try again.'));
             }
         }
+
         $cultosalasTable = TableRegistry::get('Cultosalas');
         $cultosalas=$cultosalasTable->get($id, [
             'contain' => ['Cultos','Salas']
         ]);
-        $alunos = $this->Cultosalaalunos->Alunos->find('all')->contain('Criancas');
+        $alunosView= TableRegistry::get('Nomealunos');
+        $alunos = $alunosView->find('all');
+
         $this->set(compact('cultosalaaluno', 'cultos', 'alunos','cultosalas'));
-        $this->set('_serialize', ['cultosalaaluno']);
+        $this->set('_serialize', ['cultosalaaluno','alunos']);
     }
+
+
 
     /**
      * Edit method

@@ -39,6 +39,10 @@
             <td><?= $this->Number->format($permission->id) ?></td>
         </tr>
         <tr>
+            <th scope="row"><?= __('Pai') ?></th>
+            <td><?= $this->Number->format($permission->pai) ?></td>
+        </tr>
+        <tr>
             <th scope="row"><?= __('Created') ?></th>
             <td><?= h($permission->created) ?></td>
         </tr>

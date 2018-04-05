@@ -8,10 +8,13 @@ use Cake\ORM\Entity;
  *
  * @property int $id
  * @property string $controller
+ * @property int $pai
  * @property string $action
  * @property \Cake\I18n\FrozenDate $created
  * @property \Cake\I18n\FrozenDate $modified
  * @property bool $active
+ * @property string $name
+ * @property string $icon
  *
  * @property \App\Model\Entity\Role[] $roles
  */
@@ -28,12 +31,14 @@ class Permission extends Entity
      * @var array
      */
     protected $_accessible = [
-        'name' => true,
         'controller' => true,
+        'pai' => true,
         'action' => true,
         'created' => true,
         'modified' => true,
         'active' => true,
+        'name' => true,
+        'icon' => true,
         'roles' => true
     ];
 }

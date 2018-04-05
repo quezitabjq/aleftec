@@ -1,3 +1,7 @@
+
+        <?php echo $this->Html->css('tokenize2.min'); ?>
+         <?php echo $this->Html->css('bootstrap-datepicker.min'); ?>
+        
 <section class="content">
     <?= $this->Form->create($pessoa) ?>
            
@@ -22,6 +26,20 @@
                   
                 </div>
 
+              <div class="form-group">
+                <label>Data de Nascimento:</label>
+
+                <div class="input-group date">
+                  <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                 
+                     <?php
+            echo $this->Form->input('dtnascimento',array('label'=>'','class'=>'form-control pull-right','id'=>'datepicker'));?>
+                </div>
+                <!-- /.input group -->
+              </div>
+
                 <div class="form-group">
                   <label for="sexo">Estado Civil:</label>
                    <?php
@@ -34,8 +52,8 @@
     <div class="form-group">
                   <label for="sexo">Sexo:</label>
                    <?php
-            echo $this->Form->input('sexo',[['value'=>'Feminino','text'=>'Feminino'],
-            ['value'=>'Masculino','text'=>'Masculino']],['label'=>'','class'=>'form-control','id'=>'sexo']);?>
+     echo $this->Form->select('sexo',[['value'=>'FEMININO','text'=>'FEMININO'],
+            ['value'=>'MASCULINO','text'=>'MASCULINO']],['empty' => 'Selecione','label'=>'','class'=>'form-control','id'=>'sexo']);?>
                   
                 </div>
                 <div class="form-group">
@@ -77,22 +95,22 @@
                          <div class="box-body">
 
                          <div class="form-group">
-                  <label for="telefone">Líder:</label>
+                  <label for="lider">Líder:</label>
                    <?php
-            echo $this->Form->select('pessoa_id',$pessoas,array('empty'=>'Selecione','label'=>'','class'=>'form-control','id'=>'pessoa_id '));?>
+            echo $this->Form->select('pessoa_id',$pessoas,array('multiple','label'=>'','class'=>'form-control','id'=>'lider'));?>
 
  
                 </div>
 
                          <div class="form-group">
-                  <label for="telefone">Participou do Encontro:</label>
+                  <label for="encontro">Participou do Encontro:</label>
                    <?php
             echo $this->Form->checkbox('encontro',array('label'=>'','id'=>'encontro'));?>
  
                 </div>
 
                          <div class="form-group">
-                  <label for="telefone">Fez Escola de Líderes:</label>
+                  <label for="escolalideres">Fez Escola de Líderes:</label>
                    <?php
             echo $this->Form->checkbox('escolalideres',array('label'=>'','id'=>'escolalideres'));?>
 
@@ -100,14 +118,14 @@
                 </div>
 
                                          <div class="form-group">
-                  <label for="telefone">Fez Liderança Avançada:</label>
+                  <label for="lidavanc">Fez Liderança Avançada:</label>
                    <?php
             echo $this->Form->checkbox('lidavanc',array('label'=>'','id'=>'lidavanc'));?>
 
  
                 </div>
                                      <div class="form-group">
-                  <label for="telefone">Observação:</label>
+                  <label for="descricao">Observação:</label>
                    <?php
             echo $this->Form->textarea('descricao',array('empty'=>'Selecione','label'=>'','class'=>'form-control','id'=>'descricao'));?>
 
@@ -117,31 +135,31 @@
             </div>
  
              <div class="form-group">
-                  <label for="telefone">CEP:</label>
+                  <label for="cep">CEP:</label>
                    <?php
             echo $this->Form->input('cep',array('label'=>'','class'=>'form-control','id'=>'cep'));?>
                   
                 </div>
  <div class="form-group">
-                  <label for="telefone">Rua:</label>
+                  <label for="rua">Rua:</label>
                    <?php
             echo $this->Form->input('rua',array('label'=>'','class'=>'form-control','id'=>'rua'));?>
                   
                 </div>
                  <div class="form-group">
-                  <label for="telefone">N°:</label>
+                  <label for="numero">N°:</label>
                    <?php
             echo $this->Form->input('numero',array('label'=>'','class'=>'form-control','id'=>'numero'));?>
                   
                 </div>
                 <div class="form-group">
-                  <label for="telefone">Complemento:</label>
+                  <label for="complemento">Complemento:</label>
                    <?php
             echo $this->Form->input('complemento',array('label'=>'','class'=>'form-control','id'=>'complemento'));?>
                   
                 </div>
                  <div class="form-group">
-                  <label for="telefone">Bairro:</label>
+                  <label for="bairro">Bairro:</label>
                    <?php
             echo $this->Form->input('bairro',array('label'=>'','class'=>'form-control','id'=>'bairro'));?>
                   
@@ -150,7 +168,7 @@
             
            <div class="box-footer">
                  <?= $this->Html->link(__('Voltar'), ['action' => 'index'], ['class'=>'btn btn-default ']) ?>
-                  <?= $this->Form->button(__('Inscrever'),array('class'=>'btn btn-primary pull-right')) ?>
+                  <?= $this->Form->button(__('Salvar'),array('class'=>'btn btn-primary pull-right')) ?>
     <?= $this->Form->end() ?>
             
               </div>
@@ -158,3 +176,18 @@
 
 </div>
 </section>
+
+            <script src="//code.jquery.com/jquery-2.2.4.min.js"></script>
+           <?php echo $this->Html->script('bootstrap-datepicker.min');?>
+            <?php echo $this->Html->script('tokenize2.min'); ?>
+ <script>
+ $('#lider').tokenize2();
+  //Date picker
+    $('#datepicker').datepicker({
+      autoclose: true,
+      format: 'dd/mm/yyyy',
+      locale: 'pt-br'
+    });
+
+</script>
+

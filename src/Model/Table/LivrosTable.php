@@ -9,9 +9,9 @@ use Cake\Validation\Validator;
 /**
  * Livros Model
  *
- * @property \Cake\ORM\Association\BelongsTo $Autors
- * @property \Cake\ORM\Association\BelongsTo $Generos
- * @property \Cake\ORM\Association\BelongsTo $Users
+ * @property \App\Model\Table\AutorsTable|\Cake\ORM\Association\BelongsTo $Autors
+ * @property \App\Model\Table\GenerosTable|\Cake\ORM\Association\BelongsTo $Generos
+ * @property \App\Model\Table\UsersTable|\Cake\ORM\Association\BelongsTo $Users
  *
  * @method \App\Model\Entity\Livro get($primaryKey, $options = [])
  * @method \App\Model\Entity\Livro newEntity($data = null, array $options = [])
@@ -19,7 +19,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\Livro|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\Livro patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\Livro[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\Livro findOrCreate($search, callable $callback = null)
+ * @method \App\Model\Entity\Livro findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
@@ -36,9 +36,9 @@ class LivrosTable extends Table
     {
         parent::initialize($config);
 
-        $this->table('livros');
-        $this->displayField('id');
-        $this->primaryKey('id');
+        $this->setTable('livros');
+        $this->setDisplayField('id');
+        $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
 
@@ -52,7 +52,7 @@ class LivrosTable extends Table
         ]);
         $this->belongsTo('Users', [
             'foreignKey' => 'user_id',
-            'joinType' => 'LEFT'
+            'joinType' => 'INNER'
         ]);
     }
 
@@ -69,18 +69,28 @@ class LivrosTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
+            ->scalar('codigolivro')
+            ->maxLength('codigolivro', 250)
             ->requirePresence('codigolivro', 'create')
             ->notEmpty('codigolivro');
 
         $validator
+            ->scalar('responsavel')
+            ->maxLength('responsavel', 200)
             ->requirePresence('responsavel', 'create')
             ->notEmpty('responsavel');
 
         $validator
+            ->scalar('titulo')
+            ->maxLength('titulo', 200)
             ->requirePresence('titulo', 'create')
             ->notEmpty('titulo');
 
-     
+        $validator
+            ->scalar('resumo')
+            ->maxLength('resumo', 500)
+            ->requirePresence('resumo', 'create')
+            ->notEmpty('resumo');
 
         return $validator;
     }

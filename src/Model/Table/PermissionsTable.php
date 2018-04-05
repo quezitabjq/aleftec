@@ -60,23 +60,33 @@ class PermissionsTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
+            ->scalar('controller')
+            ->maxLength('controller', 30)
+            ->allowEmpty('controller');
+
+        $validator
+            ->integer('pai')
+            ->allowEmpty('pai');
+
+        $validator
+            ->scalar('action')
+            ->maxLength('action', 30)
+            ->allowEmpty('action');
+
+        $validator
+            ->boolean('active')
+            ->allowEmpty('active');
+
+        $validator
             ->scalar('name')
-            ->maxLength('name', 50)
+            ->maxLength('name', 100)
             ->requirePresence('name', 'create')
             ->notEmpty('name');
 
         $validator
-            ->scalar('controller')
-            ->maxLength('controller', 30)
-            ->requirePresence('controller', 'create')
-            ->notEmpty('controller');
-
-     
-
-        $validator
-            ->boolean('active')
-            ->requirePresence('active', 'create')
-            ->notEmpty('active');
+            ->scalar('icon')
+            ->maxLength('icon', 200)
+            ->allowEmpty('icon');
 
         return $validator;
     }

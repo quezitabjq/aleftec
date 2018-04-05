@@ -18,28 +18,9 @@ class LivrosController extends AppController
      */
     public function index()
     {
-        $this->paginate = [
-            'contain' => ['Autors', 'Generos', 'Users'],
-            'order' => [
-            'Livros.titulo' => 'asc'
-        ]
-        ];
-         $query = $this->Livros->find('all', [
-
-            'conditions' => [
-        'OR' => [
-            'Livros.titulo LIKE' => '%'.$this->request->query('search').'%',
-            'Livros.codigolivro LIKE' => '%'.$this->request->query('search').'%',
-            'Generos.descricao LIKE' => '%'.$this->request->query('search').'%',
-            'Autors.descricao LIKE' => '%'.$this->request->query('search').'%'
-            ]
-        ]
-    ]);
-         
-        $livros = $this->paginate($query);
+            $livros = $this->paginate($this->Livros);
 
         $this->set(compact('livros'));
-        $this->set('_serialize', ['livros']);
     }
 
     /**

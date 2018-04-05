@@ -14,8 +14,8 @@ use Cake\ORM\Entity;
  * @property string $titulo
  * @property string $resumo
  * @property int $user_id
- * @property \Cake\I18n\Time $created
- * @property \Cake\I18n\Time $modified
+ * @property \Cake\I18n\FrozenTime $created
+ * @property \Cake\I18n\FrozenTime $modified
  *
  * @property \App\Model\Entity\Autor $autor
  * @property \App\Model\Entity\Genero $genero
@@ -34,7 +34,17 @@ class Livro extends Entity
      * @var array
      */
     protected $_accessible = [
-        '*' => true,
-        'id' => false
+        'codigolivro' => true,
+        'responsavel' => true,
+        'autor_id' => true,
+        'genero_id' => true,
+        'titulo' => true,
+        'resumo' => true,
+        'user_id' => true,
+        'created' => true,
+        'modified' => true,
+        'autor' => true,
+        'genero' => true,
+        'user' => true
     ];
 }

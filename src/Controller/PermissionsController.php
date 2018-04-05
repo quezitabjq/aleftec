@@ -13,6 +13,11 @@ use App\Controller\AppController;
 class PermissionsController extends AppController
 {
 
+      public function initialize(){
+        parent::initialize();
+        $this->loadComponent('RequestHandler');
+          
+    }
     /**
      * Index method
      *

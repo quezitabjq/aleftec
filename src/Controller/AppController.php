@@ -61,11 +61,10 @@ class AppController extends Controller
                 'controller' => 'Welcome',
                  'action' => 'index'
             ],
-            'logoutRedirect' => [
-                'controller' => 'Users',
-                'action' => 'login'
-            ],
-            
+          'unuauthorize'=>[
+          'controller'=>'Pages',
+          'action'=>'home'
+          ],          
 
             'authError' => 'Faça o login primeiramente',
             'authenticate' => [
@@ -73,8 +72,7 @@ class AppController extends Controller
                     'fields' => ['username' => 'email', 'password' => 'password']
                 ]
             ],
-            
-         'loginAction'=>[
+            'loginAction'=>[
           'controller'=>'Users',
           'action'=>'login'],
                 'logoutRedirect'=>[
@@ -95,14 +93,14 @@ class AppController extends Controller
     }
 
     public function beforeFilter(Event $event){
-     
+      
      $this->viewBuilder()->setTheme('AdminLTE');
-       $this->viewBuilder()->setClassName('AdminLTE.AdminLTE');  
-if (method_exists($this, 'isAuthorized')) {
+     
+//if (method_exists($this, 'isAuthorized')) {
             $this->set('Auth', $this->Auth);
             $user = $this->Auth->user();
-            $access = $this->isAuthorized($user);      
-    }
+  //          $access = $this->isAuthorized($user);      
+    //}
   }
 
       public function beforeRender(Event $event)
@@ -111,6 +109,8 @@ if (method_exists($this, 'isAuthorized')) {
             in_array($this->response->type(), ['application/json', 'application/xml'])
         ) {
             $this->set('_serialize', true);
+        }else{
+$this->viewBuilder()->setClassName('AdminLTE.AdminLTE');  
         }
     }
     

@@ -2,7 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
-
+use Cake\ORM\TableRegistry;
 /**
  * Criancas Controller
  *
@@ -62,7 +62,8 @@ class CriancasController extends AppController
                 $this->Flash->error(__('The crianca could not be saved. Please, try again.'));
             }
         }
-        $pais = $this->Criancas->Pais->find('list', ['limit' => 200]);
+         $paisView= TableRegistry::get('Listagempais');
+        $pais = $paisView->find('all');
         $this->set(compact('crianca', 'pais'));
         $this->set('_serialize', ['crianca']);
     }
@@ -89,7 +90,8 @@ class CriancasController extends AppController
                 $this->Flash->error(__('The crianca could not be saved. Please, try again.'));
             }
         }
-        $pais = $this->Criancas->Pais->find('list', ['limit' => 200]);
+       $paisView= TableRegistry::get('Listagempais');
+        $pais = $paisView->find('all');
         $this->set(compact('crianca', 'pais'));
         $this->set('_serialize', ['crianca']);
     }

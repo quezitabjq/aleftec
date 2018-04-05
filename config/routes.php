@@ -53,7 +53,8 @@ Router::scope('/', function (RouteBuilder $routes) {
   $routes->extensions(['json','xml']);
   $routes->resources('Users');
   $routes->resources('Roles');
-
+$routes->resources('livros');
+$routes->resources('permissions');
 
     /**
      * ...and connect the rest of 'Pages' controller's URLs.

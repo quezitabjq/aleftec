@@ -24,6 +24,7 @@
         <legend><?= __('Edit Permission') ?></legend>
         <?php
             echo $this->Form->control('controller');
+            echo $this->Form->control('pai');
             echo $this->Form->control('action');
             echo $this->Form->control('active');
             echo $this->Form->control('name');

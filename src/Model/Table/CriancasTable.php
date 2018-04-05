@@ -67,7 +67,7 @@ class CriancasTable extends Table
             ->notEmpty('nome');
 
         $validator
-            ->date('nascimento')
+            
             ->requirePresence('nascimento', 'create')
             ->notEmpty('nascimento');
 

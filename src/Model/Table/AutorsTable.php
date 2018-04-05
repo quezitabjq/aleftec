@@ -9,7 +9,7 @@ use Cake\Validation\Validator;
 /**
  * Autors Model
  *
- * @property \Cake\ORM\Association\HasMany $Livros
+ * @property \App\Model\Table\LivrosTable|\Cake\ORM\Association\HasMany $Livros
  *
  * @method \App\Model\Entity\Autor get($primaryKey, $options = [])
  * @method \App\Model\Entity\Autor newEntity($data = null, array $options = [])
@@ -17,7 +17,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\Autor|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\Autor patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\Autor[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\Autor findOrCreate($search, callable $callback = null)
+ * @method \App\Model\Entity\Autor findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
@@ -34,9 +34,9 @@ class AutorsTable extends Table
     {
         parent::initialize($config);
 
-        $this->table('autors');
-        $this->displayField('descricao');
-        $this->primaryKey('id');
+        $this->setTable('autors');
+        $this->setDisplayField('descricao');
+        $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
 
@@ -55,13 +55,14 @@ class AutorsTable extends Table
     {
         $validator
             ->integer('id')
-            ->allowEmpty('id', 'create');
+            ->requirePresence('id', 'create')
+            ->notEmpty('id');
 
         $validator
+            ->scalar('descricao')
+            ->maxLength('descricao', 250)
             ->requirePresence('descricao', 'create')
             ->notEmpty('descricao');
-
-       
 
         return $validator;
     }
